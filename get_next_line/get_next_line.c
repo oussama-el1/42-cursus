@@ -6,12 +6,12 @@
 /*   By: oel-hadr <oel-hadr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/01 05:44:43 by oel-hadr          #+#    #+#             */
-/*   Updated: 2024/11/02 23:10:15 by oel-hadr         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:17:29 by oel-hadr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUFFER_SIZE
-# define BUFFER_SIZE 100
+# define BUFFER_SIZE 32
 #endif
 
 #include "get_next_line.h"
@@ -77,7 +77,7 @@ static char	*extract_line(char **rest_string)
 		return (NULL);
 	}
 	line = ft_strjoin_and_free(line, "\n");
-	if (nl_pos[1] == '\0')
+	if (!line || nl_pos[1] == '\0')
 		free_reminder(rest_string);
 	else
 	{
