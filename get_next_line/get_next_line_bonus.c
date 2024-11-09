@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: oel-hadr <oel-hadr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/01 05:44:43 by oel-hadr          #+#    #+#             */
-/*   Updated: 2024/11/08 19:12:13 by oel-hadr         ###   ########.fr       */
+/*   Created: 2024/11/05 15:36:17 by oel-hadr          #+#    #+#             */
+/*   Updated: 2024/11/08 18:28:24 by oel-hadr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static int	free_reminder(char **rest_string)
 {
@@ -86,16 +86,16 @@ static char	*extract_line(char **rest_string)
 
 char	*get_next_line(int fd)
 {
-	static char	*rest_string;
+	static char	*tracking_arr[OPEN_MAX];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (!ft_strchr(rest_string, '\n'))
+	if (!tracking_arr[fd] || !ft_strchr(tracking_arr[fd], '\n'))
 	{
-		if (!read_from_file(&rest_string, fd))
+		if (!read_from_file(&tracking_arr[fd], fd))
 			return (NULL);
 	}
-	if (!rest_string)
+	if (!tracking_arr[fd])
 		return (NULL);
-	return (extract_line(&rest_string));
+	return (extract_line(&tracking_arr[fd]));
 }
